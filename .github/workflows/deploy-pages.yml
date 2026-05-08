@@ -33,17 +33,15 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Install dependencies
-        working-directory: TEAM-9
         run: npm ci
 
       - name: Build client (static data already committed)
-        working-directory: TEAM-9
         run: npm run build:client
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: TEAM-9/client/dist
+          path: client/dist
 
   deploy:
     environment:

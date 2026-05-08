@@ -2,54 +2,28 @@ import { lazy } from "react";
 
 export const SIDEBAR = [
   {
-    title: "Overview",
+    title: "Core Views",
     items: [
-      { to: "/", label: "Dashboard" },
+      { to: "/", label: "Overview" },
       { to: "/comparison", label: "Experiment Comparison" },
-    ],
-  },
-  {
-    title: "ROI & Voxels",
-    items: [
-      { to: "/roi", label: "ROI Performance" },
-      { to: "/voxels", label: "Voxel Mapping" },
       { to: "/noise-ceiling", label: "Noise Ceiling Analysis" },
-    ],
-  },
-  {
-    title: "Speaker Analysis",
-    items: [
-      { to: "/speaker", label: "Speaker Category Analysis" },
-      { to: "/bootstrap", label: "Bootstrap ROI Membership" },
-    ],
-  },
-  {
-    title: "Diagnostics",
-    items: [
-      { to: "/qc", label: "Quality Control" },
-      { to: "/sweep", label: "Hyperparameter Sweep" },
+      { to: "/brain-map", label: "Model Explorer" },
     ],
   },
   {
     title: "Assets",
-    items: [{ to: "/figures", label: "Figure Gallery" }],
-  },
-  {
-    title: "Brain Maps",
-    items: [{ to: "/brain-map", label: "Brain Activation Map" }],
+    items: [
+      { to: "/figures", label: "Figure Gallery" },
+      { to: "/presentation", label: "Presentation Deck" },
+    ],
   },
 ];
 
 export const PAGES = {
   Dashboard: lazy(() => import("./pages/Dashboard.jsx")),
   ExperimentComparison: lazy(() => import("./pages/ExperimentComparison.jsx")),
-  RoiPerformance: lazy(() => import("./pages/RoiPerformance.jsx")),
-  VoxelMapping: lazy(() => import("./pages/VoxelMapping.jsx")),
   NoiseCeiling: lazy(() => import("./pages/NoiseCeiling.jsx")),
-  SpeakerCategory: lazy(() => import("./pages/SpeakerCategory.jsx")),
-  BootstrapMembership: lazy(() => import("./pages/BootstrapMembership.jsx")),
-  QualityControl: lazy(() => import("./pages/QualityControl.jsx")),
-  HyperparameterSweep: lazy(() => import("./pages/HyperparameterSweep.jsx")),
   FigureGalleryPage: lazy(() => import("./pages/FigureGalleryPage.jsx")),
+  PresentationPage: lazy(() => import("./pages/PresentationPage.jsx")),
   BrainActivationMap: lazy(() => import("./pages/BrainActivationMap.jsx")),
 };

@@ -7,7 +7,9 @@
     "dev": "concurrently -n server,client -c blue,magenta \"npm:dev:server\" \"npm:dev:client\"",
     "dev:server": "npm --workspace server run dev",
     "dev:client": "npm --workspace client run dev",
-    "build": "npm --workspace client run build",
+    "generate-static": "node server/generate-static.mjs",
+    "build": "npm run generate-static && npm --workspace client run build",
+    "build:client": "npm --workspace client run build",
     "start": "npm --workspace server run start"
   },
   "devDependencies": {

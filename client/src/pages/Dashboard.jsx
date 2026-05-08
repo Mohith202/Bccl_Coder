@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import PageHeader from "../components/PageHeader.jsx";
 import MetricCard from "../components/MetricCard.jsx";
 import ChartPanel from "../components/ChartPanel.jsx";
-import AccordionSection from "../components/AccordionSection.jsx";
+import { Card } from "../components/Card.jsx";
 import { Skeleton, ErrorPanel, EmptyHint } from "../components/Status.jsx";
 import { api } from "../api.js";
 
@@ -12,22 +13,51 @@ function meanOf(rows, key) {
   return vals.reduce((a, b) => a + b, 0) / vals.length;
 }
 
+function roiOf(row) {
+  return row?.roi || row?.roi_name || row?.region || null;
+}
+
+function layerOf(row) {
+  return row?.layer ?? row?.layer_idx ?? null;
+}
+
 export default function Dashboard({ exp, expLabel, metric }) {
   const layer = useQuery({ queryKey: ["layerSummary", exp], queryFn: () => api.layerSummary(exp), retry: false });
   const best = useQuery({ queryKey: ["bestLayer", exp], queryFn: () => api.bestLayer(exp), retry: false });
 
   const rows = layer.data?.data || [];
+  const bestRows = best.data?.data || [];
   const meanMetric = meanOf(rows, metric);
-  const nRois = new Set(rows.map(r => r.roi).filter(Boolean)).size;
-  const nLayers = new Set(rows.map(r => r.layer).filter(v => v != null)).size;
+  const nRois = new Set(rows.map(roiOf).filter(Boolean)).size;
+  const nLayers = new Set(rows.map(layerOf).filter(v => v != null)).size;
+  const rankedRows = rows
+    .filter(r => typeof r[metric] === "number")
+    .slice()
+    .sort((left, right) => right[metric] - left[metric]);
+  const peakRow = rankedRows[0] || null;
+  const topBestRows = bestRows
+    .filter(r => typeof r[metric] === "number")
+    .slice()
+    .sort((left, right) => right[metric] - left[metric])
+    .slice(0, 5);
 
-  // Build a per-ROI mean line (over layers) using selected metric
+  // Build a compact layer comparison for the strongest ROIs only.
   const byRoi = {};
   for (const r of rows) {
-    if (!r.roi || typeof r[metric] !== "number") continue;
-    (byRoi[r.roi] ||= []).push({ x: r.layer, y: r[metric] });
+    const roi = roiOf(r);
+    const layerIdx = layerOf(r);
+    if (!roi || layerIdx == null || typeof r[metric] !== "number") continue;
+    (byRoi[roi] ||= []).push({ x: layerIdx, y: r[metric] });
   }
-  const traces = Object.entries(byRoi).slice(0, 12).map(([roi, pts]) => {
+  const traces = Object.entries(byRoi)
+    .map(([roi, pts]) => ({
+      roi,
+      peak: Math.max(...pts.map(point => point.y)),
+      pts,
+    }))
+    .sort((left, right) => right.peak - left.peak)
+    .slice(0, 6)
+    .map(({ roi, pts }) => {
     const sorted = pts.slice().sort((a, b) => a.x - b.x);
     return {
       type: "scatter", mode: "lines+markers", name: roi,
@@ -39,16 +69,59 @@ export default function Dashboard({ exp, expLabel, metric }) {
   return (
     <>
       <PageHeader
-        title="Dashboard"
+        title="Overview"
         experiment={expLabel}
-        description="Snapshot of the selected experiment: headline metrics and per-ROI layer trajectories."
+        description="A cleaner entry point into the experiment: headline metrics, strongest ROI trends, and direct links into the interactive explorer and presentation deck."
       />
+
+      <section className="mb-6 grid gap-4 xl:grid-cols-[minmax(0,1.4fr)_360px]">
+        <Card className="overflow-hidden p-6 lg:p-7">
+          <div className="text-[11px] uppercase tracking-[0.2em] text-ink-400">Research dashboard</div>
+          <h2 className="mt-3 serif text-3xl font-semibold leading-tight text-ink-900 lg:text-4xl">
+            A narrative overview instead of a raw result dump.
+          </h2>
+          <p className="mt-4 max-w-3xl text-base leading-7 text-ink-600">
+            Start here for the strongest experiment-level signals, then jump into the per-subject brain explorer or the final presentation when you need a more focused story.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link to="/brain-map" className="rounded-2xl border border-indigo-200 bg-indigo-50 px-4 py-2.5 text-sm font-medium text-indigo-700 transition hover:border-indigo-300 hover:bg-indigo-100">
+              Open interactive explorer
+            </Link>
+            <Link to="/presentation" className="rounded-2xl border border-ink-200 bg-white px-4 py-2.5 text-sm font-medium text-ink-800 transition hover:border-indigo-300 hover:text-indigo-700">
+              Open presentation deck
+            </Link>
+          </div>
+        </Card>
+
+        <Card className="p-6">
+          <div className="text-[11px] uppercase tracking-[0.18em] text-ink-400">Current experiment</div>
+          <div className="mt-2 text-xl font-semibold text-ink-900">{expLabel}</div>
+          <div className="mt-5 space-y-4 text-sm text-ink-600">
+            <div className="flex items-start justify-between gap-4 border-t border-ink-100 pt-4 first:border-t-0 first:pt-0">
+              <span>Primary metric</span>
+              <span className="font-medium text-ink-900">{metric}</span>
+            </div>
+            <div className="flex items-start justify-between gap-4 border-t border-ink-100 pt-4">
+              <span>Peak ROI</span>
+              <span className="font-medium text-ink-900">{peakRow ? roiOf(peakRow) : "—"}</span>
+            </div>
+            <div className="flex items-start justify-between gap-4 border-t border-ink-100 pt-4">
+              <span>Peak layer</span>
+              <span className="font-medium text-ink-900">{peakRow ? layerOf(peakRow) : "—"}</span>
+            </div>
+            <div className="flex items-start justify-between gap-4 border-t border-ink-100 pt-4">
+              <span>Available ROI traces</span>
+              <span className="font-medium text-ink-900">{traces.length}</span>
+            </div>
+          </div>
+        </Card>
+      </section>
 
       <section className="grid gap-4 grid-cols-2 md:grid-cols-4 mb-6">
         <MetricCard label="Mean metric" value={meanMetric != null ? meanMetric.toFixed(4) : "—"} unit={metric.includes("corr") ? "r" : ""} help={`Mean of ${metric} across rows`} />
+        <MetricCard label="Peak metric" value={peakRow ? peakRow[metric].toFixed(4) : "—"} unit={metric.includes("corr") ? "r" : ""} help={`Maximum ${metric} found in the layer summary`} />
         <MetricCard label="ROIs" value={nRois || "—"} unit="ROI" help="Distinct ROI count" />
         <MetricCard label="Layers" value={nLayers || "—"} unit="layers" help="Distinct layer indices" />
-        <MetricCard label="Rows" value={rows.length || "—"} unit="rows" help="Source CSV rows" />
       </section>
 
       {layer.isLoading && <Skeleton className="h-96" />}
@@ -56,8 +129,8 @@ export default function Dashboard({ exp, expLabel, metric }) {
 
       {traces.length > 0 && (
         <ChartPanel
-          title="Per-ROI layer curves"
-          subtitle={`Metric: ${metric}`}
+          title="Layer profiles for the strongest ROIs"
+          subtitle={`Top 6 ROI traces ranked by peak ${metric}`}
           data={traces}
           layout={{ xaxis: { title: "Layer" }, yaxis: { title: metric } }}
           height={420}
@@ -68,11 +141,40 @@ export default function Dashboard({ exp, expLabel, metric }) {
         <EmptyHint message="No layer summary rows available." />
       )}
 
-      <div className="mt-6 space-y-3">
-        <AccordionSection title="Best-layer summary (raw)" count={best.data?.data?.length}>
-          <pre className="mono text-xs overflow-auto max-h-80">{JSON.stringify(best.data?.data?.slice(0, 50), null, 2)}</pre>
-        </AccordionSection>
-      </div>
+      <section className="mt-6 grid gap-4 xl:grid-cols-[minmax(0,1fr)_360px]">
+        <Card className="p-6">
+          <div className="text-[11px] uppercase tracking-[0.18em] text-ink-400">Top ROI headlines</div>
+          <div className="mt-2 text-xl font-semibold text-ink-900">Best layer results worth following up</div>
+          <div className="mt-5 space-y-4">
+            {topBestRows.map((row, index) => (
+              <div key={`${roiOf(row)}-${index}`} className="flex items-center justify-between gap-4 border-t border-ink-100 pt-4 first:border-t-0 first:pt-0">
+                <div>
+                  <div className="font-medium text-ink-900">{roiOf(row) || "Unknown ROI"}</div>
+                  <div className="text-sm text-ink-500">Layer {layerOf(row) ?? "—"}</div>
+                </div>
+                <div className="mono tabular-nums text-sm text-ink-600">{typeof row[metric] === "number" ? row[metric].toFixed(4) : "—"}</div>
+              </div>
+            ))}
+            {topBestRows.length === 0 && <div className="text-sm text-ink-500">No best-layer rows available for this experiment.</div>}
+          </div>
+        </Card>
+
+        <Card className="p-6">
+          <div className="text-[11px] uppercase tracking-[0.18em] text-ink-400">Next steps</div>
+          <div className="mt-2 text-xl font-semibold text-ink-900">Best pages for deeper inspection</div>
+          <div className="mt-5 space-y-3 text-sm">
+            <Link to="/brain-map" className="block rounded-2xl border border-ink-200 bg-white px-4 py-3 font-medium text-ink-800 transition hover:border-indigo-300 hover:text-indigo-700">
+              Interactive explorer for per-subject maps
+            </Link>
+            <Link to="/comparison" className="block rounded-2xl border border-ink-200 bg-white px-4 py-3 font-medium text-ink-800 transition hover:border-indigo-300 hover:text-indigo-700">
+              Compare best-layer performance across experiments
+            </Link>
+            <Link to="/presentation" className="block rounded-2xl border border-ink-200 bg-white px-4 py-3 font-medium text-ink-800 transition hover:border-indigo-300 hover:text-indigo-700">
+              Open the final presentation deck
+            </Link>
+          </div>
+        </Card>
+      </section>
     </>
   );
 }

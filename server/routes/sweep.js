@@ -7,6 +7,30 @@ import { readJson } from "../utils/json.js";
 
 const r = Router();
 
+function findCandidate(rootDir, relPaths, depth = 2) {
+  for (const rel of relPaths) {
+    const abs = path.join(rootDir, rel);
+    if (fs.existsSync(abs)) return { abs, root: rootDir };
+  }
+
+  if (depth <= 0) return null;
+
+  let entries = [];
+  try {
+    entries = fs.readdirSync(rootDir, { withFileTypes: true });
+  } catch {
+    return null;
+  }
+
+  for (const entry of entries) {
+    if (!entry.isDirectory()) continue;
+    const nested = findCandidate(path.join(rootDir, entry.name), relPaths, depth - 1);
+    if (nested) return nested;
+  }
+
+  return null;
+}
+
 // Returns sweep results for ho31_alpha_sweep.
 r.get("/alpha-sweep", (_req, res) => {
   const dir = experimentDir("alpha_sweep");
@@ -25,13 +49,12 @@ r.get("/alpha-sweep", (_req, res) => {
     };
     const entry = { alpha: parseInt(name.split("_")[1], 10), folder: sub };
     for (const [k, list] of Object.entries(candidates)) {
-      for (const rel of list) {
-        const abs = path.join(sub, rel);
-        if (fs.existsSync(abs)) {
-          entry[k] = abs.endsWith(".json") ? readJson(abs) : readCsv(abs)?.rows;
-          entry[`${k}_source`] = abs;
-          break;
-        }
+      const match = findCandidate(sub, list);
+      if (match) {
+        entry[k] = match.abs.endsWith(".json") ? readJson(match.abs) : readCsv(match.abs)?.rows;
+        entry[`${k}_source`] = match.abs;
+        if (match.root !== sub) entry.model = path.basename(match.root);
+        if (!entry.data_folder) entry.data_folder = match.root;
       }
     }
     return entry;

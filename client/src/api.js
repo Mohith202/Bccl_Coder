@@ -1,3 +1,6 @@
+// All data is served from pre-generated static JSON files in public/data/.
+// No backend server is required.
+
 async function getJSON(url) {
   const res = await fetch(url);
   const body = await res.json().catch(() => ({}));
@@ -10,22 +13,26 @@ async function getJSON(url) {
   return body;
 }
 
+// Resolves a static data file path relative to the app root.
+export function staticDataUrl(relPath) {
+  return `data/${relPath}`;
+}
+
 export const api = {
-  experiments: () => getJSON("/api/experiments"),
-  coreRoi: (exp) => getJSON(`/api/${exp}/core-roi`),
-  layerSummary: (exp) => getJSON(`/api/${exp}/core-roi/layer-summary`),
-  bestLayer: (exp) => getJSON(`/api/${exp}/core-roi/best-layer`),
-  bestLayerVsNc: (exp) => getJSON(`/api/${exp}/best-layer-vs-nc`),
-  noiseCeiling: (exp) => getJSON(`/api/${exp}/noise-ceiling`),
-  protocolC: (exp) => getJSON(`/api/${exp}/protocol-c`),
-  anatomy: (exp, k) => getJSON(`/api/${exp}/anatomy/${k}`),
-  jaccard: (exp) => getJSON(`/api/${exp}/jaccard`),
-  iscSummary: (exp) => getJSON(`/api/${exp}/isc-summary`),
-  iscVoxel: (exp) => getJSON(`/api/${exp}/isc-voxel-mapping`),
-  topVoxels: (exp) => getJSON(`/api/${exp}/top-voxels-summary`),
-  bootstrapMembership: (exp) => getJSON(`/api/${exp}/bootstrap/membership`),
-  bootstrapSummary: (exp) => getJSON(`/api/${exp}/bootstrap/summary`),
-  qc: (exp) => getJSON(`/api/${exp}/qc`),
-  alphaSweep: () => getJSON("/api/alpha-sweep"),
-  figures: (exp) => getJSON(`/api/${exp}/figures`),
+  experiments: () => getJSON(staticDataUrl("experiments.json")),
+  layerSummary: (exp) => getJSON(staticDataUrl(`${exp}/layer-summary.json`)),
+  bestLayer: (exp) => getJSON(staticDataUrl(`${exp}/best-layer.json`)),
+  bestLayerVsNc: (exp) => getJSON(staticDataUrl(`${exp}/best-layer-vs-nc.json`)),
+  figures: (exp) => getJSON(staticDataUrl(`${exp}/figures.json`)),
+  // Brain map: fetches pre-generated per-subject export JSON
+  dashboardExport: (model, subject) =>
+    getJSON(staticDataUrl(`brain-map/${encodeURIComponent(model)}/${encodeURIComponent(subject)}.json`)),
+  brainMapSelectors: () => getJSON(staticDataUrl("brain-map/selectors.json")),
 };
+
+// Asset URL helpers (kept for compatibility with BrainActivationMap + PresentationPage)
+export function resolveApiUrl(path) { return path; }
+export function resolveAppAssetUrl(path) {
+  if (!path) return path;
+  return path.startsWith("/") ? path.slice(1) : path;
+}

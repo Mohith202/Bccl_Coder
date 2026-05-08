@@ -1,0 +1,314 @@
+{
+  "data": {
+    "summary": {
+      "subject": "sub-09",
+      "model": "Llama3-3B_finetune_single_female",
+      "model_alias": "Llama3-3B_finetune",
+      "model_slug": "ssd_scratch_mohith_mohith_outputs_finetuned_20260502_184656_single_female_ssd_scratch_mohith_mohith_models_Llama-3.2-3B-Instruct_merged",
+      "dataset": "HO31 test split",
+      "protocol": "mean_corr",
+      "layer": 27,
+      "mean_corr": 0.02347152288778953,
+      "max_corr": 0.0632326264035825,
+      "max_corr_roi": "aSTG_L",
+      "best_roi": "aSTG_L",
+      "worst_roi": "PT_R",
+      "n_rois": 31,
+      "n_subjects": 6,
+      "n_rows_test_split": 124,
+      "n_rois_painted": 31,
+      "fit_summary_excerpt": {
+        "alpha": null
+      },
+      "color_ranges": {
+        "prediction": {
+          "vmin": -0.010712862401149558,
+          "vmax": 0.03850272432074847,
+          "cmap": "viridis"
+        }
+      }
+    },
+    "runConfig": {
+      "model_label": "Llama3-3B_finetune_single_female",
+      "model_alias": "Llama3-3B_finetune",
+      "model_slug": "ssd_scratch_mohith_mohith_outputs_finetuned_20260502_184656_single_female_ssd_scratch_mohith_mohith_models_Llama-3.2-3B-Instruct_merged",
+      "subject": "sub-09",
+      "best_layer": 27,
+      "dataset": "HO31 test split",
+      "metric": "mean_corr",
+      "n_rows_test_split": 124,
+      "n_rois_painted": 31,
+      "global_vmin": -0.010712862401149558,
+      "global_vmax": 0.03850272432074847
+    },
+    "manifest": {
+      "views": [
+        "surface"
+      ],
+      "modes": {
+        "prediction": {
+          "surface": "brain-maps/Llama3-3B_finetune_single_female/sub-09/mean_corr_surface.png"
+        }
+      },
+      "color_ranges": {
+        "prediction": {
+          "vmin": -0.010712862401149558,
+          "vmax": 0.03850272432074847,
+          "cmap": "viridis"
+        }
+      },
+      "note": "Mean correlation surface for Llama3-3B_finetune_single_female on sub-09."
+    },
+    "roiScores": [
+      {
+        "roi_name": "ACG_L",
+        "metric_value": 0.023939971079494624,
+        "corr": 0.023939971079494624
+      },
+      {
+        "roi_name": "AG_L",
+        "metric_value": 0.030868664427679146,
+        "corr": 0.030868664427679146
+      },
+      {
+        "roi_name": "AG_R",
+        "metric_value": 0.0085135573221937,
+        "corr": 0.0085135573221937
+      },
+      {
+        "roi_name": "FO_L",
+        "metric_value": 0.03847072820425788,
+        "corr": 0.03847072820425788
+      },
+      {
+        "roi_name": "FOrbital_L",
+        "metric_value": 0.0328466524551521,
+        "corr": 0.0328466524551521
+      },
+      {
+        "roi_name": "FP_L",
+        "metric_value": 0.027578787011902,
+        "corr": 0.027578787011902
+      },
+      {
+        "roi_name": "HG_L",
+        "metric_value": 0.027187536572870773,
+        "corr": 0.027187536572870773
+      },
+      {
+        "roi_name": "HG_R",
+        "metric_value": 0.013454583061021576,
+        "corr": 0.013454583061021576
+      },
+      {
+        "roi_name": "IFG_op_L",
+        "metric_value": 0.05553627368693477,
+        "corr": 0.05553627368693477
+      },
+      {
+        "roi_name": "IFG_op_R",
+        "metric_value": 0.004353980257987675,
+        "corr": 0.004353980257987675
+      },
+      {
+        "roi_name": "IFG_tri_L",
+        "metric_value": 0.0364330307063047,
+        "corr": 0.0364330307063047
+      },
+      {
+        "roi_name": "LOC_sup_L",
+        "metric_value": 0.011125164258931149,
+        "corr": 0.011125164258931149
+      },
+      {
+        "roi_name": "LOC_sup_R",
+        "metric_value": 0.018249693457760577,
+        "corr": 0.018249693457760577
+      },
+      {
+        "roi_name": "MFG_L",
+        "metric_value": 0.03193030502449035,
+        "corr": 0.03193030502449035
+      },
+      {
+        "roi_name": "PCG_L",
+        "metric_value": 0.019695932110299304,
+        "corr": 0.019695932110299304
+      },
+      {
+        "roi_name": "PCing_L",
+        "metric_value": 0.014278108113910472,
+        "corr": 0.014278108113910472
+      },
+      {
+        "roi_name": "PT_L",
+        "metric_value": 0.0220578752149199,
+        "corr": 0.0220578752149199
+      },
+      {
+        "roi_name": "PT_R",
+        "metric_value": -0.0019974697828678504,
+        "corr": -0.0019974697828678504
+      },
+      {
+        "roi_name": "Precuneus_L",
+        "metric_value": 0.006823306997329801,
+        "corr": 0.006823306997329801
+      },
+      {
+        "roi_name": "Precuneus_R",
+        "metric_value": 0.006611590063030149,
+        "corr": 0.006611590063030149
+      },
+      {
+        "roi_name": "SFG_L",
+        "metric_value": 0.028605987342406852,
+        "corr": 0.028605987342406852
+      },
+      {
+        "roi_name": "TP_L",
+        "metric_value": 0.03677732502148545,
+        "corr": 0.03677732502148545
+      },
+      {
+        "roi_name": "TP_R",
+        "metric_value": 0.018088579546080574,
+        "corr": 0.018088579546080574
+      },
+      {
+        "roi_name": "aMTG_L",
+        "metric_value": 0.0066739219735895,
+        "corr": 0.0066739219735895
+      },
+      {
+        "roi_name": "aSMG_L",
+        "metric_value": 0.030289865299047078,
+        "corr": 0.030289865299047078
+      },
+      {
+        "roi_name": "aSTG_L",
+        "metric_value": 0.0632326264035825,
+        "corr": 0.0632326264035825
+      },
+      {
+        "roi_name": "pMTG_L",
+        "metric_value": 0.01240674433448475,
+        "corr": 0.01240674433448475
+      },
+      {
+        "roi_name": "pMTG_R",
+        "metric_value": 0.018720342115597078,
+        "corr": 0.018720342115597078
+      },
+      {
+        "roi_name": "pSMG_L",
+        "metric_value": 0.034923614214997754,
+        "corr": 0.034923614214997754
+      },
+      {
+        "roi_name": "pSTG_L",
+        "metric_value": 0.030958762076033274,
+        "corr": 0.030958762076033274
+      },
+      {
+        "roi_name": "pSTG_R",
+        "metric_value": 0.0189811709505678,
+        "corr": 0.0189811709505678
+      }
+    ],
+    "selectors": {
+      "models": [
+        "Llama3-3B_finetune_single_female",
+        "Llama3-3B_finetune_single_male",
+        "Qwen3-4B_base_alpha300",
+        "Qwen3-4B_base_ho31",
+        "Qwen3-4B_finetune_single_female",
+        "Qwen3-4B_finetune_single_male"
+      ],
+      "combinations": [
+        {
+          "modelLabel": "Llama3-3B_finetune_single_female",
+          "model": "Llama3-3B_finetune",
+          "subjects": [
+            "sub-01",
+            "sub-08",
+            "sub-09",
+            "sub-13",
+            "sub-16",
+            "sub-20"
+          ]
+        },
+        {
+          "modelLabel": "Llama3-3B_finetune_single_male",
+          "model": "Llama3-3B_finetune",
+          "subjects": [
+            "sub-01",
+            "sub-08",
+            "sub-09",
+            "sub-13",
+            "sub-16",
+            "sub-20"
+          ]
+        },
+        {
+          "modelLabel": "Qwen3-4B_base_alpha300",
+          "model": "Qwen3-4B_base_alpha300",
+          "subjects": [
+            "sub-01",
+            "sub-08",
+            "sub-09",
+            "sub-13",
+            "sub-16",
+            "sub-20"
+          ]
+        },
+        {
+          "modelLabel": "Qwen3-4B_base_ho31",
+          "model": "Qwen3-4B_base_ho31",
+          "subjects": [
+            "sub-01",
+            "sub-08",
+            "sub-09",
+            "sub-13",
+            "sub-16",
+            "sub-20"
+          ]
+        },
+        {
+          "modelLabel": "Qwen3-4B_finetune_single_female",
+          "model": "Qwen3-4B_finetune",
+          "subjects": [
+            "sub-01",
+            "sub-08",
+            "sub-09",
+            "sub-13",
+            "sub-16",
+            "sub-20"
+          ]
+        },
+        {
+          "modelLabel": "Qwen3-4B_finetune_single_male",
+          "model": "Qwen3-4B_finetune",
+          "subjects": [
+            "sub-01",
+            "sub-08",
+            "sub-09",
+            "sub-13",
+            "sub-16",
+            "sub-20"
+          ]
+        }
+      ],
+      "availableSubjects": [
+        "sub-01",
+        "sub-08",
+        "sub-09",
+        "sub-13",
+        "sub-16",
+        "sub-20"
+      ],
+      "selectedModel": "Llama3-3B_finetune_single_female",
+      "selectedSubject": "sub-09"
+    }
+  }
+}

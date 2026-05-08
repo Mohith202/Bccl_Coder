@@ -1,0 +1,84 @@
+{
+  "models": [
+    "Llama3-3B_finetune_single_female",
+    "Llama3-3B_finetune_single_male",
+    "Qwen3-4B_base_alpha300",
+    "Qwen3-4B_base_ho31",
+    "Qwen3-4B_finetune_single_female",
+    "Qwen3-4B_finetune_single_male"
+  ],
+  "combinations": [
+    {
+      "modelLabel": "Llama3-3B_finetune_single_female",
+      "model": "Llama3-3B_finetune",
+      "subjects": [
+        "sub-01",
+        "sub-08",
+        "sub-09",
+        "sub-13",
+        "sub-16",
+        "sub-20"
+      ]
+    },
+    {
+      "modelLabel": "Llama3-3B_finetune_single_male",
+      "model": "Llama3-3B_finetune",
+      "subjects": [
+        "sub-01",
+        "sub-08",
+        "sub-09",
+        "sub-13",
+        "sub-16",
+        "sub-20"
+      ]
+    },
+    {
+      "modelLabel": "Qwen3-4B_base_alpha300",
+      "model": "Qwen3-4B_base_alpha300",
+      "subjects": [
+        "sub-01",
+        "sub-08",
+        "sub-09",
+        "sub-13",
+        "sub-16",
+        "sub-20"
+      ]
+    },
+    {
+      "modelLabel": "Qwen3-4B_base_ho31",
+      "model": "Qwen3-4B_base_ho31",
+      "subjects": [
+        "sub-01",
+        "sub-08",
+        "sub-09",
+        "sub-13",
+        "sub-16",
+        "sub-20"
+      ]
+    },
+    {
+      "modelLabel": "Qwen3-4B_finetune_single_female",
+      "model": "Qwen3-4B_finetune",
+      "subjects": [
+        "sub-01",
+        "sub-08",
+        "sub-09",
+        "sub-13",
+        "sub-16",
+        "sub-20"
+      ]
+    },
+    {
+      "modelLabel": "Qwen3-4B_finetune_single_male",
+      "model": "Qwen3-4B_finetune",
+      "subjects": [
+        "sub-01",
+        "sub-08",
+        "sub-09",
+        "sub-13",
+        "sub-16",
+        "sub-20"
+      ]
+    }
+  ]
+}

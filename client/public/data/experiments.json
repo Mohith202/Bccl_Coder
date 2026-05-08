@@ -1,0 +1,62 @@
+{
+  "data": [
+    {
+      "key": "llama_finetune",
+      "label": "Llama-3.2-3B Fine-tune",
+      "folder": "swati_llama_finetune",
+      "model_family": "Llama",
+      "kind": "finetune",
+      "has_categories": true,
+      "exists": false,
+      "path": "D:\\Courses\\CSAI\\hf\\swati_llama_finetune"
+    },
+    {
+      "key": "qwen_regional",
+      "label": "Qwen3-4B Regional Analysis",
+      "folder": "regions_output/a1_features_qwen3_4b",
+      "model_family": "Qwen",
+      "kind": "regional",
+      "has_categories": true,
+      "exists": false,
+      "path": "D:\\Courses\\CSAI\\hf\\regions_output\\a1_features_qwen3_4b"
+    },
+    {
+      "key": "qwen_roi31",
+      "label": "Qwen3-4B ROI-31 Set",
+      "folder": "qwen_31_finetune",
+      "model_family": "Qwen",
+      "kind": "roi_set",
+      "has_categories": true,
+      "exists": false,
+      "path": "D:\\Courses\\CSAI\\hf\\qwen_31_finetune"
+    },
+    {
+      "key": "alpha_sweep",
+      "label": "Alpha Hyperparameter Sweep (HO-31)",
+      "folder": "ds005345-a1-results/ho31_alpha_sweep",
+      "model_family": "Qwen",
+      "kind": "alpha_sweep",
+      "has_categories": false,
+      "exists": false,
+      "path": "D:\\Courses\\CSAI\\hf\\ds005345-a1-results\\ho31_alpha_sweep"
+    },
+    {
+      "key": "bootstrap_membership",
+      "label": "Bootstrap ROI Membership (7-ROI)",
+      "folder": "7ROI_outputs",
+      "model_family": "Mixed",
+      "kind": "membership",
+      "has_categories": true,
+      "exists": false,
+      "path": "D:\\Courses\\CSAI\\hf\\7ROI_outputs"
+    }
+  ],
+  "meta": {
+    "metrics": [
+      "mean_corr",
+      "r2",
+      "pearson_r"
+    ],
+    "defaultMetric": "mean_corr"
+  }
+}

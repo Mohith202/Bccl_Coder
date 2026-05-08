@@ -1,8 +1,30 @@
 import path from "node:path";
 import fs from "node:fs";
+import { fileURLToPath } from "node:url";
 import { EXPERIMENTS } from "../config.js";
 
-export const DATA_ROOT = path.resolve(process.env.DATA_ROOT || "d:/csai2/hf");
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+function resolveDefaultDataRoot() {
+  if (process.env.DATA_ROOT) return path.resolve(process.env.DATA_ROOT);
+
+  const candidates = [
+    path.resolve(__dirname, "../../../hf"),
+    path.resolve("d:/csai2/hf"),
+  ];
+
+  for (const candidate of candidates) {
+    try {
+      if (fs.existsSync(candidate)) return candidate;
+    } catch {
+      // Ignore invalid or inaccessible candidates and continue.
+    }
+  }
+
+  return candidates[0];
+}
+
+export const DATA_ROOT = resolveDefaultDataRoot();
 
 export function experimentDir(expKey) {
   const cfg = EXPERIMENTS[expKey];

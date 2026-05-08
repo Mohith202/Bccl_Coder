@@ -1,0 +1,422 @@
+{
+  "metric": "mean_corr",
+  "input_globs": [
+    "hf/qwen_31_finetune/fit_results/qwen3_4b_roi31/*/*/protocol_c_core_roi_scores.csv",
+    "hf/swati_llama_finetune/fit_results/llama_production_roi31/*/*/protocol_c_core_roi_scores.csv",
+    "hf/ds005345-a1-results/ho31_alpha_sweep/alpha_300/qwen3_4b/protocol_c_core_roi_scores.csv",
+    "hf/regions_output/ho31_rois/qwen3_4b/fit_results/Qwen_Qwen3-4B/protocol_c_core_roi_scores.csv"
+  ],
+  "n_input_files": 6,
+  "n_rows_total": 153264,
+  "n_rows_test_split": 153264,
+  "models": {
+    "Llama3-3B_finetune_single_female": {
+      "model_slug": "ssd_scratch_mohith_mohith_outputs_finetuned_20260502_184656_single_female_ssd_scratch_mohith_mohith_models_Llama-3.2-3B-Instruct_merged",
+      "model_label": "Llama3-3B_finetune_single_female",
+      "best_layer": 27,
+      "n_rows_test_split": 744,
+      "subjects": {
+        "sub-01": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_female/subjects/sub-01/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_female/subjects/sub-01/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_female/subjects/sub-01/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-08": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_female/subjects/sub-08/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_female/subjects/sub-08/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_female/subjects/sub-08/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-09": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_female/subjects/sub-09/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_female/subjects/sub-09/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_female/subjects/sub-09/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-13": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_female/subjects/sub-13/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_female/subjects/sub-13/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_female/subjects/sub-13/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-16": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_female/subjects/sub-16/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_female/subjects/sub-16/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_female/subjects/sub-16/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-20": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_female/subjects/sub-20/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_female/subjects/sub-20/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_female/subjects/sub-20/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        }
+      }
+    },
+    "Llama3-3B_finetune_single_male": {
+      "model_slug": "ssd_scratch_mohith_mohith_outputs_finetuned_20260502_185014_single_male_ssd_scratch_mohith_mohith_models_Llama-3.2-3B-Instruct_merged",
+      "model_label": "Llama3-3B_finetune_single_male",
+      "best_layer": 27,
+      "n_rows_test_split": 744,
+      "subjects": {
+        "sub-01": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_male/subjects/sub-01/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_male/subjects/sub-01/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_male/subjects/sub-01/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-08": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_male/subjects/sub-08/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_male/subjects/sub-08/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_male/subjects/sub-08/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-09": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_male/subjects/sub-09/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_male/subjects/sub-09/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_male/subjects/sub-09/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-13": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_male/subjects/sub-13/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_male/subjects/sub-13/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_male/subjects/sub-13/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-16": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_male/subjects/sub-16/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_male/subjects/sub-16/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_male/subjects/sub-16/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-20": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_male/subjects/sub-20/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_male/subjects/sub-20/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Llama3-3B_finetune_single_male/subjects/sub-20/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        }
+      }
+    },
+    "Qwen3-4B_base_alpha300": {
+      "model_slug": "Qwen_Qwen3-4B",
+      "model_label": "Qwen3-4B_base_alpha300",
+      "best_layer": 0,
+      "n_rows_test_split": 744,
+      "subjects": {
+        "sub-01": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_alpha300/subjects/sub-01/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_alpha300/subjects/sub-01/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_alpha300/subjects/sub-01/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-08": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_alpha300/subjects/sub-08/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_alpha300/subjects/sub-08/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_alpha300/subjects/sub-08/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-09": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_alpha300/subjects/sub-09/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_alpha300/subjects/sub-09/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_alpha300/subjects/sub-09/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-13": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_alpha300/subjects/sub-13/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_alpha300/subjects/sub-13/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_alpha300/subjects/sub-13/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-16": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_alpha300/subjects/sub-16/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_alpha300/subjects/sub-16/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_alpha300/subjects/sub-16/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-20": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_alpha300/subjects/sub-20/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_alpha300/subjects/sub-20/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_alpha300/subjects/sub-20/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        }
+      }
+    },
+    "Qwen3-4B_base_ho31": {
+      "model_slug": "Qwen_Qwen3-4B",
+      "model_label": "Qwen3-4B_base_ho31",
+      "best_layer": 0,
+      "n_rows_test_split": 744,
+      "subjects": {
+        "sub-01": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_ho31/subjects/sub-01/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_ho31/subjects/sub-01/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_ho31/subjects/sub-01/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-08": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_ho31/subjects/sub-08/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_ho31/subjects/sub-08/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_ho31/subjects/sub-08/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-09": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_ho31/subjects/sub-09/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_ho31/subjects/sub-09/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_ho31/subjects/sub-09/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-13": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_ho31/subjects/sub-13/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_ho31/subjects/sub-13/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_ho31/subjects/sub-13/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-16": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_ho31/subjects/sub-16/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_ho31/subjects/sub-16/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_ho31/subjects/sub-16/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-20": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_ho31/subjects/sub-20/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_ho31/subjects/sub-20/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_base_ho31/subjects/sub-20/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        }
+      }
+    },
+    "Qwen3-4B_finetune_single_female": {
+      "model_slug": "ssd_scratch_mohith_mohith_outputs_finetuned_qwen3_4b_roi31_20260503_193305_single_female_Qwen_Qwen3-4B_merged",
+      "model_label": "Qwen3-4B_finetune_single_female",
+      "best_layer": 0,
+      "n_rows_test_split": 744,
+      "subjects": {
+        "sub-01": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_female/subjects/sub-01/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_female/subjects/sub-01/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_female/subjects/sub-01/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-08": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_female/subjects/sub-08/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_female/subjects/sub-08/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_female/subjects/sub-08/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-09": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_female/subjects/sub-09/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_female/subjects/sub-09/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_female/subjects/sub-09/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-13": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_female/subjects/sub-13/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_female/subjects/sub-13/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_female/subjects/sub-13/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-16": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_female/subjects/sub-16/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_female/subjects/sub-16/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_female/subjects/sub-16/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-20": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_female/subjects/sub-20/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_female/subjects/sub-20/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_female/subjects/sub-20/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        }
+      }
+    },
+    "Qwen3-4B_finetune_single_male": {
+      "model_slug": "ssd_scratch_mohith_mohith_outputs_finetuned_qwen3_4b_roi31_20260503_194045_single_male_Qwen_Qwen3-4B_merged",
+      "model_label": "Qwen3-4B_finetune_single_male",
+      "best_layer": 0,
+      "n_rows_test_split": 744,
+      "subjects": {
+        "sub-01": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_male/subjects/sub-01/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_male/subjects/sub-01/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_male/subjects/sub-01/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-08": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_male/subjects/sub-08/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_male/subjects/sub-08/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_male/subjects/sub-08/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-09": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_male/subjects/sub-09/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_male/subjects/sub-09/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_male/subjects/sub-09/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-13": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_male/subjects/sub-13/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_male/subjects/sub-13/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_male/subjects/sub-13/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-16": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_male/subjects/sub-16/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_male/subjects/sub-16/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_male/subjects/sub-16/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        },
+        "sub-20": {
+          "n_rows_test_split": 124,
+          "n_rois_painted": 31,
+          "missing_roi_masks": [],
+          "nifti": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_male/subjects/sub-20/mean_corr_best_layer.nii.gz",
+          "surface_4panel": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_male/subjects/sub-20/mean_corr_surface.png",
+          "per_roi_csv": "/home/mohith/ds005345/project/visualizes/ho31_testsplit_brain_maps/Qwen3-4B_finetune_single_male/subjects/sub-20/mean_corr_per_roi_best_layer.csv",
+          "global_vmin": -0.010712862401149558,
+          "global_vmax": 0.03850272432074847
+        }
+      }
+    }
+  }
+}

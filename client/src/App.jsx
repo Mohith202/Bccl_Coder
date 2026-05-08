@@ -31,8 +31,9 @@ export default function App() {
       {/* Sidebar */}
       <aside className="w-64 shrink-0 sticky top-0 h-screen overflow-y-auto scrollbar-thin border-r border-ink-200/70 bg-white/60 backdrop-blur-sm">
         <div className="px-5 pt-6 pb-4">
-          <div className="text-[11px] mono uppercase tracking-[0.18em] text-ink-400">Neural Encoding</div>
-          <div className="serif text-xl font-semibold text-ink-900 leading-tight mt-1">Dashboard</div>
+          <div className="text-[11px] mono uppercase tracking-[0.18em] text-ink-400">Neural Encoding Project</div>
+          <div className="serif text-xl font-semibold text-ink-900 leading-tight mt-1">BCCL Coder</div>
+          <div className="mt-2 text-sm leading-6 text-ink-500">A trimmed research viewer for the project story, comparisons, and brain maps.</div>
         </div>
         <nav className="px-2 pb-8">
           {SIDEBAR.map((g) => (
@@ -46,7 +47,7 @@ export default function App() {
         <header className="sticky top-0 z-10 bg-white/70 backdrop-blur-md border-b border-ink-200/70">
           <div className="px-8 py-3 flex items-center justify-between gap-4 flex-wrap">
             <div className="text-xs text-ink-400">
-              <span>Dashboard</span>
+              <span>BCCL Coder</span>
               {currentItem && <span className="mx-1.5">›</span>}
               {currentItem && <span className="text-ink-800">{currentItem.label}</span>}
             </div>
@@ -78,14 +79,9 @@ export default function App() {
             <Routes>
               <Route path="/" element={<PAGES.Dashboard exp={exp} expLabel={expLabel} metric={metric} />} />
               <Route path="/comparison" element={<PAGES.ExperimentComparison exp={exp} expLabel={expLabel} metric={metric} experiments={experiments} />} />
-              <Route path="/roi" element={<PAGES.RoiPerformance exp={exp} expLabel={expLabel} metric={metric} />} />
-              <Route path="/voxels" element={<PAGES.VoxelMapping exp={exp} expLabel={expLabel} metric={metric} />} />
               <Route path="/noise-ceiling" element={<PAGES.NoiseCeiling exp={exp} expLabel={expLabel} metric={metric} />} />
-              <Route path="/speaker" element={<PAGES.SpeakerCategory exp={exp} expLabel={expLabel} metric={metric} />} />
-              <Route path="/bootstrap" element={<PAGES.BootstrapMembership exp={exp} expLabel={expLabel} metric={metric} />} />
-              <Route path="/qc" element={<PAGES.QualityControl exp={exp} expLabel={expLabel} />} />
-              <Route path="/sweep" element={<PAGES.HyperparameterSweep />} />
               <Route path="/figures" element={<PAGES.FigureGalleryPage exp={exp} expLabel={expLabel} />} />
+              <Route path="/presentation" element={<PAGES.PresentationPage />} />
               <Route path="/brain-map" element={<PAGES.BrainActivationMap />} />
             </Routes>
           </Suspense>

@@ -1,0 +1,314 @@
+{
+  "data": {
+    "summary": {
+      "subject": "sub-16",
+      "model": "Qwen3-4B_base_alpha300",
+      "model_alias": "Qwen3-4B_base_alpha300",
+      "model_slug": "Qwen_Qwen3-4B",
+      "dataset": "HO31 test split",
+      "protocol": "mean_corr",
+      "layer": 0,
+      "mean_corr": 0.003946335868467076,
+      "max_corr": 0.022457533501356423,
+      "max_corr_roi": "pSTG_R",
+      "best_roi": "pSTG_R",
+      "worst_roi": "pMTG_L",
+      "n_rois": 31,
+      "n_subjects": 6,
+      "n_rows_test_split": 124,
+      "n_rois_painted": 31,
+      "fit_summary_excerpt": {
+        "alpha": "300"
+      },
+      "color_ranges": {
+        "prediction": {
+          "vmin": -0.010712862401149558,
+          "vmax": 0.03850272432074847,
+          "cmap": "viridis"
+        }
+      }
+    },
+    "runConfig": {
+      "model_label": "Qwen3-4B_base_alpha300",
+      "model_alias": "Qwen3-4B_base_alpha300",
+      "model_slug": "Qwen_Qwen3-4B",
+      "subject": "sub-16",
+      "best_layer": 0,
+      "dataset": "HO31 test split",
+      "metric": "mean_corr",
+      "n_rows_test_split": 124,
+      "n_rois_painted": 31,
+      "global_vmin": -0.010712862401149558,
+      "global_vmax": 0.03850272432074847
+    },
+    "manifest": {
+      "views": [
+        "surface"
+      ],
+      "modes": {
+        "prediction": {
+          "surface": "brain-maps/Qwen3-4B_base_alpha300/sub-16/mean_corr_surface.png"
+        }
+      },
+      "color_ranges": {
+        "prediction": {
+          "vmin": -0.010712862401149558,
+          "vmax": 0.03850272432074847,
+          "cmap": "viridis"
+        }
+      },
+      "note": "Mean correlation surface for Qwen3-4B_base_alpha300 on sub-16."
+    },
+    "roiScores": [
+      {
+        "roi_name": "AG_L",
+        "metric_value": 0.000148103290462875,
+        "corr": 0.000148103290462875
+      },
+      {
+        "roi_name": "AG_R",
+        "metric_value": 0.004184545920770075,
+        "corr": 0.004184545920770075
+      },
+      {
+        "roi_name": "FOrb_L",
+        "metric_value": 0.003792597945402475,
+        "corr": 0.003792597945402475
+      },
+      {
+        "roi_name": "FP_L",
+        "metric_value": -0.00404245882269495,
+        "corr": -0.00404245882269495
+      },
+      {
+        "roi_name": "FrOpc_L",
+        "metric_value": 0.00923832317790245,
+        "corr": 0.00923832317790245
+      },
+      {
+        "roi_name": "HG_L",
+        "metric_value": 0.008473212908666875,
+        "corr": 0.008473212908666875
+      },
+      {
+        "roi_name": "HG_R",
+        "metric_value": 0.013871572140123476,
+        "corr": 0.013871572140123476
+      },
+      {
+        "roi_name": "IFG_op_L",
+        "metric_value": 0.005846111979843525,
+        "corr": 0.005846111979843525
+      },
+      {
+        "roi_name": "IFG_op_R",
+        "metric_value": 0.008116418447784926,
+        "corr": 0.008116418447784926
+      },
+      {
+        "roi_name": "IFG_tr_L",
+        "metric_value": 0.012517982711753299,
+        "corr": 0.012517982711753299
+      },
+      {
+        "roi_name": "LOC_sup_L",
+        "metric_value": -0.00413132037248115,
+        "corr": -0.00413132037248115
+      },
+      {
+        "roi_name": "LOC_sup_R",
+        "metric_value": 0.006125572082773325,
+        "corr": 0.006125572082773325
+      },
+      {
+        "roi_name": "MFG_L",
+        "metric_value": -0.00741009499717275,
+        "corr": -0.00741009499717275
+      },
+      {
+        "roi_name": "PT_L",
+        "metric_value": -0.003144711403619875,
+        "corr": -0.003144711403619875
+      },
+      {
+        "roi_name": "PT_R",
+        "metric_value": 0.0174347967160071,
+        "corr": 0.0174347967160071
+      },
+      {
+        "roi_name": "ParaCing_L",
+        "metric_value": 0.0073806973228851,
+        "corr": 0.0073806973228851
+      },
+      {
+        "roi_name": "Precun_L",
+        "metric_value": 0.00210596492909565,
+        "corr": 0.00210596492909565
+      },
+      {
+        "roi_name": "Precun_R",
+        "metric_value": 0.010740026058471125,
+        "corr": 0.010740026058471125
+      },
+      {
+        "roi_name": "SFG_L",
+        "metric_value": -0.0080532894258124,
+        "corr": -0.0080532894258124
+      },
+      {
+        "roi_name": "TPole_L",
+        "metric_value": -0.004733339725804575,
+        "corr": -0.004733339725804575
+      },
+      {
+        "roi_name": "TPole_R",
+        "metric_value": 0.010926593163382474,
+        "corr": 0.010926593163382474
+      },
+      {
+        "roi_name": "aCing_L",
+        "metric_value": 0.013173756550332299,
+        "corr": 0.013173756550332299
+      },
+      {
+        "roi_name": "aMTG_L",
+        "metric_value": -0.007736286688937151,
+        "corr": -0.007736286688937151
+      },
+      {
+        "roi_name": "aSMG_L",
+        "metric_value": -0.0025545534512023,
+        "corr": -0.0025545534512023
+      },
+      {
+        "roi_name": "aSTG_L",
+        "metric_value": -0.009097136507634749,
+        "corr": -0.009097136507634749
+      },
+      {
+        "roi_name": "pCing_L",
+        "metric_value": 0.013448878798287975,
+        "corr": 0.013448878798287975
+      },
+      {
+        "roi_name": "pMTG_L",
+        "metric_value": -0.01291214063444525,
+        "corr": -0.01291214063444525
+      },
+      {
+        "roi_name": "pMTG_R",
+        "metric_value": 0.010576063085575424,
+        "corr": 0.010576063085575424
+      },
+      {
+        "roi_name": "pSMG_L",
+        "metric_value": 0.0036407052481666497,
+        "corr": 0.0036407052481666497
+      },
+      {
+        "roi_name": "pSTG_L",
+        "metric_value": 0.00195228797324095,
+        "corr": 0.00195228797324095
+      },
+      {
+        "roi_name": "pSTG_R",
+        "metric_value": 0.022457533501356423,
+        "corr": 0.022457533501356423
+      }
+    ],
+    "selectors": {
+      "models": [
+        "Llama3-3B_finetune_single_female",
+        "Llama3-3B_finetune_single_male",
+        "Qwen3-4B_base_alpha300",
+        "Qwen3-4B_base_ho31",
+        "Qwen3-4B_finetune_single_female",
+        "Qwen3-4B_finetune_single_male"
+      ],
+      "combinations": [
+        {
+          "modelLabel": "Llama3-3B_finetune_single_female",
+          "model": "Llama3-3B_finetune",
+          "subjects": [
+            "sub-01",
+            "sub-08",
+            "sub-09",
+            "sub-13",
+            "sub-16",
+            "sub-20"
+          ]
+        },
+        {
+          "modelLabel": "Llama3-3B_finetune_single_male",
+          "model": "Llama3-3B_finetune",
+          "subjects": [
+            "sub-01",
+            "sub-08",
+            "sub-09",
+            "sub-13",
+            "sub-16",
+            "sub-20"
+          ]
+        },
+        {
+          "modelLabel": "Qwen3-4B_base_alpha300",
+          "model": "Qwen3-4B_base_alpha300",
+          "subjects": [
+            "sub-01",
+            "sub-08",
+            "sub-09",
+            "sub-13",
+            "sub-16",
+            "sub-20"
+          ]
+        },
+        {
+          "modelLabel": "Qwen3-4B_base_ho31",
+          "model": "Qwen3-4B_base_ho31",
+          "subjects": [
+            "sub-01",
+            "sub-08",
+            "sub-09",
+            "sub-13",
+            "sub-16",
+            "sub-20"
+          ]
+        },
+        {
+          "modelLabel": "Qwen3-4B_finetune_single_female",
+          "model": "Qwen3-4B_finetune",
+          "subjects": [
+            "sub-01",
+            "sub-08",
+            "sub-09",
+            "sub-13",
+            "sub-16",
+            "sub-20"
+          ]
+        },
+        {
+          "modelLabel": "Qwen3-4B_finetune_single_male",
+          "model": "Qwen3-4B_finetune",
+          "subjects": [
+            "sub-01",
+            "sub-08",
+            "sub-09",
+            "sub-13",
+            "sub-16",
+            "sub-20"
+          ]
+        }
+      ],
+      "availableSubjects": [
+        "sub-01",
+        "sub-08",
+        "sub-09",
+        "sub-13",
+        "sub-16",
+        "sub-20"
+      ],
+      "selectedModel": "Qwen3-4B_base_alpha300",
+      "selectedSubject": "sub-16"
+    }
+  }
+}

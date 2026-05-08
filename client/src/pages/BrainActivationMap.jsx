@@ -1,35 +1,11 @@
-import { useState } from "react";
+import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Plot from "react-plotly.js";
+import { Link, useSearchParams } from "react-router-dom";
+import { Card } from "../components/Card.jsx";
 import { Skeleton, ErrorPanel } from "../components/Status.jsx";
-import { applyTheme, CATEGORY_COLORS } from "../theme.js";
-
-const MODE_OPTS = [
-  { value: "prediction", label: "Prediction" },
-  { value: "truth", label: "Ground Truth" },
-  { value: "error", label: "Error" },
-];
-
-const METRIC_OPTS = [
-  { value: "corr", label: "Correlation (r)" },
-  { value: "r2", label: "R²" },
-  { value: "2v2_accuracy", label: "2v2 Accuracy" },
-  { value: "pred_mean", label: "Prediction Mean" },
-  { value: "truth_mean", label: "Truth Mean" },
-  { value: "error", label: "Signed Error" },
-  { value: "abs_error", label: "Absolute Error" },
-];
-
-async function fetchJson(url) {
-  const response = await fetch(url);
-  const body = await response.json().catch(() => null);
-  if (!response.ok) {
-    const error = new Error(body?.message || response.statusText || "Request failed");
-    error.body = body;
-    throw error;
-  }
-  return body;
-}
+import { api } from "../api.js";
+import { applyTheme } from "../theme.js";
 
 function fmt(value, digits = 4) {
   if (value == null || Number.isNaN(value)) return "—";
@@ -42,349 +18,263 @@ function humanize(value) {
     .replace(/\b\w/g, char => char.toUpperCase());
 }
 
-function metricLabel(metric) {
-  return METRIC_OPTS.find(option => option.value === metric)?.label ?? humanize(metric);
-}
-
-function MetricCard({ label, value, accent }) {
+function StatCard({ label, value, note }) {
   return (
-    <div className="rounded-2xl border border-gray-800 bg-gray-900/80 p-4">
-      <div className="text-[11px] uppercase tracking-[0.16em] text-gray-500">{label}</div>
-      <div className={`mt-2 text-2xl font-semibold tabular-nums ${accent}`}>{value}</div>
-    </div>
+    <Card className="p-5">
+      <div className="text-[11px] uppercase tracking-[0.18em] text-ink-400">{label}</div>
+      <div className="mt-2 serif text-3xl font-semibold tabular-nums text-ink-900">{value}</div>
+      {note && <div className="mt-2 text-sm text-ink-500">{note}</div>}
+    </Card>
   );
 }
 
-function Sidebar({ summary, anatomyRows, mode, onMode, metric, onMetric, metricOptions, colorRange }) {
+function ControlPanel({ selectors, onModelChange, onSubjectChange }) {
   return (
-    <aside className="w-72 shrink-0 border-r border-gray-800 bg-black/30 p-5 overflow-y-auto">
-      <div className="mb-6">
-        <div className="text-[11px] uppercase tracking-[0.18em] text-gray-500">Source</div>
-        <div className="mt-2 text-sm font-medium text-gray-100">Local dashboard export</div>
-        <div className="mt-1 text-xs text-gray-500">dashboard_export/brain_maps_manifest.json</div>
-      </div>
-
-      <div className="grid gap-3 rounded-2xl border border-gray-800 bg-gray-900/70 p-4 text-sm text-gray-300">
+    <Card className="p-5">
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)_auto] lg:items-end">
         <div>
-          <div className="text-[11px] uppercase tracking-[0.14em] text-gray-500">Subject</div>
-          <div className="mt-1 leading-snug">{summary?.subject ?? "—"}</div>
+          <label className="text-[11px] uppercase tracking-[0.18em] text-ink-400">Model run</label>
+          <select
+            className="mt-2 w-full rounded-xl border border-ink-200 bg-white px-3 py-2.5 text-sm text-ink-900 outline-none focus:border-indigo-400"
+            value={selectors?.selectedModel ?? ""}
+            onChange={event => onModelChange(event.target.value)}
+          >
+            {(selectors?.models ?? []).map(option => (
+              <option key={option} value={option}>{humanize(option)}</option>
+            ))}
+          </select>
         </div>
+
         <div>
-          <div className="text-[11px] uppercase tracking-[0.14em] text-gray-500">Model</div>
-          <div className="mt-1 leading-snug">{summary?.model ?? "—"}</div>
+          <label className="text-[11px] uppercase tracking-[0.18em] text-ink-400">Participant subject</label>
+          <select
+            className="mt-2 w-full rounded-xl border border-ink-200 bg-white px-3 py-2.5 text-sm text-ink-900 outline-none focus:border-indigo-400"
+            value={selectors?.selectedSubject ?? ""}
+            onChange={event => onSubjectChange(event.target.value)}
+          >
+            {(selectors?.availableSubjects ?? []).map(option => (
+              <option key={option} value={option}>{option}</option>
+            ))}
+          </select>
         </div>
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <div className="text-[11px] uppercase tracking-[0.14em] text-gray-500">Protocol</div>
-            <div className="mt-1">{summary?.protocol ?? "—"}</div>
-          </div>
-          <div>
-            <div className="text-[11px] uppercase tracking-[0.14em] text-gray-500">Layer</div>
-            <div className="mt-1">{summary?.layer ?? "—"}</div>
-          </div>
-        </div>
-        <div>
-          <div className="text-[11px] uppercase tracking-[0.14em] text-gray-500">Alpha</div>
-          <div className="mt-1">{summary?.fit_summary_excerpt?.alpha ?? "—"}</div>
+
+        <div className="rounded-2xl border border-ink-200/70 bg-[#f7f3ea] px-4 py-3 text-sm text-ink-600">
+          <div className="text-[11px] uppercase tracking-[0.16em] text-ink-400">Interactive view</div>
+          <div className="mt-1 font-medium text-ink-900">Per-subject HO31 test split</div>
         </div>
       </div>
-
-      <div className="mt-6 grid gap-3">
-        <label className="text-[11px] font-semibold uppercase tracking-[0.18em] text-gray-500">Map Mode</label>
-        <select
-          className="rounded-xl border border-gray-700 bg-gray-900 px-3 py-2 text-sm text-gray-100 outline-none focus:border-indigo-400"
-          value={mode}
-          onChange={event => onMode(event.target.value)}
-        >
-          {MODE_OPTS.map(option => (
-            <option key={option.value} value={option.value}>{option.label}</option>
-          ))}
-        </select>
-
-        <label className="mt-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-gray-500">ROI Metric</label>
-        <select
-          className="rounded-xl border border-gray-700 bg-gray-900 px-3 py-2 text-sm text-gray-100 outline-none focus:border-indigo-400"
-          value={metric}
-          onChange={event => onMetric(event.target.value)}
-        >
-          {metricOptions.map(option => (
-            <option key={option.value} value={option.value}>{option.label}</option>
-          ))}
-        </select>
-      </div>
-
-      <div className="mt-6 rounded-2xl border border-gray-800 bg-gray-900/70 p-4 text-sm text-gray-300">
-        <div className="text-[11px] uppercase tracking-[0.16em] text-gray-500">Color Range</div>
-        <div className="mt-2 grid grid-cols-2 gap-3 text-xs">
-          <div>
-            <div className="text-gray-500">Min</div>
-            <div className="mt-1 tabular-nums text-gray-100">{fmt(colorRange?.vmin, 3)}</div>
-          </div>
-          <div>
-            <div className="text-gray-500">Max</div>
-            <div className="mt-1 tabular-nums text-gray-100">{fmt(colorRange?.vmax, 3)}</div>
-          </div>
-          <div className="col-span-2">
-            <div className="text-gray-500">Colormap</div>
-            <div className="mt-1 text-gray-100">{colorRange?.cmap ?? "—"}</div>
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-6 rounded-2xl border border-gray-800 bg-gray-900/70 p-4 text-sm text-gray-300">
-        <div className="text-[11px] uppercase tracking-[0.16em] text-gray-500">Painted Anatomy</div>
-        <div className="mt-3 flex flex-wrap gap-2">
-          {anatomyRows.map(row => (
-            <span key={row.roi_name} className="rounded-full border border-gray-700 px-2.5 py-1 text-xs text-gray-200">
-              {row.roi_name}
-            </span>
-          ))}
-        </div>
-      </div>
-    </aside>
+    </Card>
   );
 }
 
-function StatsBar({ summary }) {
+function BrainSurfaceCard({ imageUrl, caption }) {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5 mb-6">
-      <MetricCard label="Mean Correlation" value={fmt(summary?.mean_corr)} accent="text-indigo-300" />
-      <MetricCard label="Mean Abs Error" value={fmt(summary?.mean_abs_error)} accent="text-rose-300" />
-      <MetricCard label="Best ROI" value={summary?.best_roi ?? "—"} accent="text-emerald-300" />
-      <MetricCard label="Worst ROI" value={summary?.worst_roi ?? "—"} accent="text-amber-300" />
-      <MetricCard label="ROIs" value={summary?.n_rois ?? "—"} accent="text-sky-300" />
-    </div>
-  );
-}
-
-function BrainMapTile({ view, src }) {
-  return (
-    <figure className="overflow-hidden rounded-2xl border border-gray-800 bg-[#05070c]">
-      <div className="flex min-h-[240px] items-center justify-center bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.12),_transparent_55%)] p-4">
+    <Card className="overflow-hidden">
+      <div className="border-b border-ink-200/70 px-5 py-4">
+        <div className="text-[11px] uppercase tracking-[0.18em] text-ink-400">Brain activation map</div>
+        <div className="mt-1 text-lg font-semibold text-ink-900">Mean correlation surface</div>
+      </div>
+      <div className="bg-[radial-gradient(circle_at_top,_rgba(79,70,229,0.10),_transparent_58%)] p-5">
         <img
-          src={src}
-          alt={humanize(view)}
-          className="max-h-[320px] w-full object-contain"
+          src={imageUrl}
+          alt={caption}
+          className="mx-auto max-h-[460px] w-full rounded-xl object-contain"
           loading="lazy"
         />
       </div>
-      <figcaption className="border-t border-gray-800 px-4 py-3 text-sm text-gray-300">
-        {humanize(view)}
-      </figcaption>
-    </figure>
+      <div className="border-t border-ink-200/70 px-5 py-4 text-sm leading-6 text-ink-600">{caption}</div>
+    </Card>
   );
 }
 
-function BrainMapsSection({ manifest, mode }) {
-  const views = manifest?.views ?? [];
-  const modeMaps = manifest?.modes?.[mode] ?? {};
-  const colorRange = manifest?.color_ranges?.[mode];
+function ConfigRow({ label, value, mono = false }) {
+  return (
+    <div className="flex items-start justify-between gap-4 border-t border-ink-100 py-3 first:border-t-0 first:pt-0 last:pb-0">
+      <div className="text-sm text-ink-500">{label}</div>
+      <div className={`text-right text-sm text-ink-900 ${mono ? "mono break-all" : "font-medium"}`}>{value ?? "—"}</div>
+    </div>
+  );
+}
+
+function RunConfigCard({ summary, runConfig }) {
+  return (
+    <Card className="p-5">
+      <div className="text-[11px] uppercase tracking-[0.18em] text-ink-400">Run configuration</div>
+      <div className="mt-1 text-lg font-semibold text-ink-900">Selected model metadata</div>
+      <div className="mt-5">
+        <ConfigRow label="Dataset" value={runConfig?.dataset ?? summary?.dataset} />
+        <ConfigRow label="Model alias" value={humanize(runConfig?.model_alias ?? summary?.model_alias)} />
+        <ConfigRow label="Model label" value={summary?.model} />
+        <ConfigRow label="Subject" value={summary?.subject} mono />
+        <ConfigRow label="Alpha" value={summary?.fit_summary_excerpt?.alpha ?? "default"} />
+        <ConfigRow label="Best layer" value={summary?.layer} />
+        <ConfigRow label="Rows in test split" value={summary?.n_rows_test_split} />
+        <ConfigRow label="Painted ROIs" value={summary?.n_rois_painted} />
+        <ConfigRow label="Metric" value={humanize(runConfig?.metric ?? summary?.protocol)} />
+        <ConfigRow label="Model slug" value={runConfig?.model_slug ?? summary?.model_slug} mono />
+      </div>
+    </Card>
+  );
+}
+
+function TopRoiList({ rows }) {
+  const topRows = rows.slice(0, 8);
 
   return (
-    <section className="mb-6 rounded-[28px] border border-gray-800 bg-gray-900/70 p-5">
-      <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <div className="text-[11px] uppercase tracking-[0.18em] text-gray-500">Brain Maps</div>
-          <h2 className="mt-1 text-2xl font-semibold text-white">{MODE_OPTS.find(option => option.value === mode)?.label ?? humanize(mode)}</h2>
-        </div>
-        <div className="rounded-full border border-gray-700 px-3 py-1.5 text-xs text-gray-300">
-          {`Range ${fmt(colorRange?.vmin, 3)} to ${fmt(colorRange?.vmax, 3)} · ${colorRange?.cmap ?? "—"}`}
-        </div>
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-2">
-        {views.map(view => (
-          <BrainMapTile key={view} view={view} src={modeMaps[view]} />
+    <Card className="p-5">
+      <div className="text-[11px] uppercase tracking-[0.18em] text-ink-400">Best ROIs</div>
+      <div className="mt-1 text-lg font-semibold text-ink-900">Top regional correlations</div>
+      <div className="mt-5 space-y-3">
+        {topRows.map((row, index) => (
+          <div key={row.roi_name}>
+            <div className="flex items-center justify-between gap-4 text-sm">
+              <div className="font-medium text-ink-800">{index + 1}. {humanize(row.roi_name)}</div>
+              <div className="mono tabular-nums text-ink-500">{fmt(row.corr)}</div>
+            </div>
+            <div className="mt-2 h-2 rounded-full bg-ink-100">
+              <div
+                className="h-2 rounded-full bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-500"
+                style={{ width: `${Math.max(8, Math.min(100, ((row.corr ?? 0) / (topRows[0]?.corr || 1)) * 100))}%` }}
+              />
+            </div>
+          </div>
         ))}
       </div>
-
-      <p className="mt-4 max-w-4xl text-sm leading-6 text-gray-400">{manifest?.note}</p>
-    </section>
+    </Card>
   );
 }
 
-function RoiComparisonChart({ rows }) {
-  if (!rows?.length) return <div className="text-sm text-gray-500">No ROI scores found.</div>;
-
-  const ordered = [...rows].sort((left, right) => left.roi_name.localeCompare(right.roi_name));
-  const labels = ordered.map(row => humanize(row.roi_name));
+function RoiDistribution({ rows }) {
+  const topRows = rows.slice(0, 12);
 
   return (
-    <Plot
-      data={[
-        {
-          type: "bar",
-          name: "Ground truth",
-          x: labels,
-          y: ordered.map(row => row.truth_mean),
-          marker: { color: "#94a3b8", opacity: 0.9 },
-        },
-        {
-          type: "bar",
-          name: "Prediction",
-          x: labels,
-          y: ordered.map(row => row.pred_mean),
-          marker: {
-            color: ordered.map(row => CATEGORY_COLORS[row.roi_name] ?? "#818cf8"),
-            opacity: 0.92,
+    <Card className="p-5">
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <div>
+          <div className="text-[11px] uppercase tracking-[0.18em] text-ink-400">ROI distribution</div>
+          <div className="mt-1 text-lg font-semibold text-ink-900">Top 12 regions by correlation</div>
+        </div>
+        <div className="text-xs text-ink-500">mean_corr_per_roi_best_layer.csv</div>
+      </div>
+      <Plot
+        data={[
+          {
+            type: "bar",
+            orientation: "h",
+            y: topRows.map(row => humanize(row.roi_name)).reverse(),
+            x: topRows.map(row => row.corr).reverse(),
+            marker: {
+              color: topRows.map(() => "#4f46e5").reverse(),
+              opacity: 0.92,
+            },
+            hovertemplate: "%{y}<br>corr=%{x:.4f}<extra></extra>",
           },
-        },
-      ]}
-      layout={applyTheme({
-        title: { text: "Prediction vs Ground Truth", font: { size: 14 } },
-        barmode: "group",
-        height: 360,
-        margin: { l: 50, r: 20, t: 50, b: 90 },
-        xaxis: { tickangle: -25, automargin: true },
-        yaxis: { title: "Mean activation", range: [0, 1.1] },
-        legend: { orientation: "h", y: -0.2 },
-      })}
-      config={{ responsive: true, displayModeBar: false }}
-      style={{ width: "100%" }}
-    />
-  );
-}
-
-function MetricBarChart({ rows, metric }) {
-  if (!rows?.length) return <div className="text-sm text-gray-500">No metric data available.</div>;
-
-  const ordered = [...rows].sort((left, right) => (right[metric] ?? -Infinity) - (left[metric] ?? -Infinity));
-  const labels = ordered.map(row => humanize(row.roi_name));
-  const values = ordered.map(row => row[metric]);
-  const numericValues = values.filter(Number.isFinite);
-  const hasNegative = numericValues.some(value => value < 0);
-
-  return (
-    <Plot
-      data={[
-        {
-          type: "bar",
-          x: labels,
-          y: values,
-          marker: {
-            color: ordered.map(row => CATEGORY_COLORS[row.roi_name] ?? "#818cf8"),
-            opacity: 0.92,
-          },
-          text: values.map(value => fmt(value)),
-          textposition: "outside",
-          cliponaxis: false,
-          hovertemplate: "%{x}<br>%{y:.4f}<extra></extra>",
-        },
-      ]}
-      layout={applyTheme({
-        title: { text: `${metricLabel(metric)} by ROI`, font: { size: 14 } },
-        height: 360,
-        margin: { l: 50, r: 20, t: 50, b: 90 },
-        xaxis: { tickangle: -25, automargin: true },
-        yaxis: numericValues.length
-          ? {
-              title: metricLabel(metric),
-              range: [
-                hasNegative ? Math.min(...numericValues, 0) * 1.15 : 0,
-                Math.max(...numericValues, 0) * 1.15 || 1,
-              ],
-            }
-          : { title: metricLabel(metric) },
-        shapes: hasNegative
-          ? [{ type: "line", x0: -0.5, x1: labels.length - 0.5, y0: 0, y1: 0, line: { color: "#94a3b8", dash: "dot", width: 1 } }]
-          : [],
-      })}
-      config={{ responsive: true, displayModeBar: false }}
-      style={{ width: "100%" }}
-    />
-  );
-}
-
-function ScoreTable({ rows }) {
-  const ordered = [...rows].sort((left, right) => left.roi_name.localeCompare(right.roi_name));
-
-  return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full text-sm">
-        <thead className="bg-gray-950/80 text-left text-xs uppercase tracking-[0.16em] text-gray-500">
-          <tr>
-            <th className="px-4 py-3">ROI</th>
-            <th className="px-4 py-3">Pred</th>
-            <th className="px-4 py-3">Truth</th>
-            <th className="px-4 py-3">Error</th>
-            <th className="px-4 py-3">Abs Error</th>
-            <th className="px-4 py-3">Corr</th>
-            <th className="px-4 py-3">R²</th>
-            <th className="px-4 py-3">2v2</th>
-          </tr>
-        </thead>
-        <tbody>
-          {ordered.map(row => (
-            <tr key={row.roi_name} className="border-t border-gray-800 text-gray-200">
-              <td className="px-4 py-3 font-medium">{humanize(row.roi_name)}</td>
-              <td className="px-4 py-3 tabular-nums">{fmt(row.pred_mean)}</td>
-              <td className="px-4 py-3 tabular-nums">{fmt(row.truth_mean)}</td>
-              <td className="px-4 py-3 tabular-nums">{fmt(row.error)}</td>
-              <td className="px-4 py-3 tabular-nums">{fmt(row.abs_error)}</td>
-              <td className="px-4 py-3 tabular-nums">{fmt(row.corr)}</td>
-              <td className="px-4 py-3 tabular-nums">{fmt(row.r2)}</td>
-              <td className="px-4 py-3 tabular-nums">{fmt(row["2v2_accuracy"])} </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+        ]}
+        layout={applyTheme({
+          height: 420,
+          margin: { l: 120, r: 24, t: 10, b: 40 },
+          xaxis: { title: "correlation (r)" },
+          yaxis: { automargin: true },
+        })}
+        config={{ responsive: true, displayModeBar: false }}
+        style={{ width: "100%" }}
+      />
+    </Card>
   );
 }
 
 export default function BrainActivationMap() {
-  const [mode, setMode] = useState("prediction");
-  const [metric, setMetric] = useState("corr");
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const requestedModel = searchParams.get("model") || "";
+  const requestedSubject = searchParams.get("subject") || "";
+
+  // Load selectors first to pick defaults when no query params are set
+  const selectorsQuery = useQuery({
+    queryKey: ["brain-map-selectors"],
+    queryFn: api.brainMapSelectors,
+    staleTime: Infinity,
+  });
+
+  const defaultModel = selectorsQuery.data?.models?.[0] ?? "";
+  const effectiveModel = requestedModel || defaultModel;
+  const defaultSubject = selectorsQuery.data?.combinations?.find(c => c.modelLabel === effectiveModel)?.subjects?.[0] ?? "";
+  const effectiveSubject = requestedSubject || defaultSubject;
 
   const exportQuery = useQuery({
-    queryKey: ["dashboard-export"],
-    queryFn: () => fetchJson("/api/dashboard-export"),
-    staleTime: 10 * 60 * 1000,
+    queryKey: ["dashboard-export", effectiveModel, effectiveSubject],
+    queryFn: () => api.dashboardExport(effectiveModel, effectiveSubject),
+    enabled: !!effectiveModel && !!effectiveSubject,
+    staleTime: Infinity,
   });
 
   const data = exportQuery.data?.data;
   const summary = data?.summary;
+  const runConfig = data?.runConfig;
   const manifest = data?.manifest;
-  const roiScores = data?.roiScores ?? [];
-  const anatomyRows = (data?.roiLookup ?? []).filter(row => row.kind === "anatomical_language_roi");
-  const metricOptions = METRIC_OPTS.filter(option => (data?.metricFields ?? []).includes(option.value));
-  const colorRange = manifest?.color_ranges?.[mode] ?? summary?.color_ranges?.[mode];
+  // Merge selectors: per-subject selectors from export JSON, supplemented by root selectors
+  const selectors = data?.selectors ?? selectorsQuery.data ?? null;
+  const roiScores = useMemo(() => {
+    const rows = data?.roiScores ?? [];
+    return rows.slice().sort((left, right) => (right.corr ?? -Infinity) - (left.corr ?? -Infinity));
+  }, [data?.roiScores]);
+  const peakCorrelationNote = [
+    summary?.max_corr_layer != null ? `Layer ${summary.max_corr_layer}` : null,
+    summary?.max_corr_roi ? humanize(summary.max_corr_roi) : null,
+    summary?.max_corr_run != null ? `Run ${summary.max_corr_run}` : null,
+  ].filter(Boolean).join(" · ");
+
+  const updateSelection = (patch) => {
+    const next = new URLSearchParams(searchParams);
+    Object.entries(patch).forEach(([key, value]) => {
+      if (!value) next.delete(key);
+      else next.set(key, value);
+    });
+    setSearchParams(next, { replace: true });
+  };
 
   return (
-    <div className="flex h-full min-h-0 overflow-hidden bg-gray-950 text-white">
-      {exportQuery.isLoading ? (
-        <aside className="w-72 shrink-0 border-r border-gray-800 p-5">
-          <Skeleton className="h-80" />
-        </aside>
-      ) : (
-        <Sidebar
-          summary={summary}
-          anatomyRows={anatomyRows}
-          mode={mode}
-          onMode={setMode}
-          metric={metric}
-          onMetric={setMetric}
-          metricOptions={metricOptions}
-          colorRange={colorRange}
-        />
-      )}
+    <div className="min-h-full bg-[linear-gradient(180deg,_#fcfbf7_0%,_#f6f2e8_100%)] px-6 py-8 text-ink-900 lg:px-8">
+      <div className="mx-auto max-w-[1500px] space-y-6">
+        <section className="grid gap-6 rounded-[32px] border border-ink-200/70 bg-white/80 p-6 shadow-card lg:grid-cols-[minmax(0,1.25fr)_320px] lg:p-8">
+          <div>
+            <div className="text-[11px] uppercase tracking-[0.22em] text-ink-400">Interactive model explorer</div>
+            <h1 className="mt-3 serif text-4xl font-semibold leading-tight text-ink-900 lg:text-5xl">
+              Per-subject neural encoding results, without the raw dashboard clutter.
+            </h1>
+            <p className="mt-4 max-w-3xl text-base leading-7 text-ink-600">
+              This view follows the LitCoder-style flow: choose a model run, switch to an individual participant subject, and inspect the headline correlation statistics together with the brain surface map.
+            </p>
+          </div>
 
-      <main className="flex-1 overflow-y-auto p-6">
-        <header className="mb-6">
-          <div className="text-[11px] uppercase tracking-[0.2em] text-gray-500">Brain activation map</div>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-white">Downloaded Export Viewer</h1>
-          <p className="mt-3 max-w-3xl text-sm leading-6 text-gray-400">
-            This page now reads directly from the local dashboard export files you downloaded. The four PNG panels come from the exported brain maps, and the charts below summarize the corresponding ROI score table.
-          </p>
-        </header>
+          <div className="rounded-[28px] border border-ink-200/70 bg-[#f8f4eb] p-5">
+            <div className="text-[11px] uppercase tracking-[0.18em] text-ink-400">Quick links</div>
+            <div className="mt-4 space-y-3 text-sm">
+              <Link to="/presentation" className="block rounded-2xl border border-ink-200 bg-white px-4 py-3 font-medium text-ink-800 transition hover:border-indigo-300 hover:text-indigo-700">
+                Open presentation deck
+              </Link>
+              <Link to="/comparison" className="block rounded-2xl border border-ink-200 bg-white px-4 py-3 font-medium text-ink-800 transition hover:border-indigo-300 hover:text-indigo-700">
+                Compare model runs
+              </Link>
+              <Link to="/figures" className="block rounded-2xl border border-ink-200 bg-white px-4 py-3 font-medium text-ink-800 transition hover:border-indigo-300 hover:text-indigo-700">
+                Browse figure gallery
+              </Link>
+            </div>
+          </div>
+        </section>
 
         {exportQuery.isLoading && (
           <div className="grid gap-4">
             <Skeleton className="h-32" />
-            <Skeleton className="h-[420px]" />
-            <div className="grid gap-4 xl:grid-cols-2">
-              <Skeleton className="h-[380px]" />
-              <Skeleton className="h-[380px]" />
+            <div className="grid gap-4 lg:grid-cols-4">
+              <Skeleton className="h-32" />
+              <Skeleton className="h-32" />
+              <Skeleton className="h-32" />
+              <Skeleton className="h-32" />
+            </div>
+            <div className="grid gap-4 xl:grid-cols-[minmax(0,1.45fr)_360px]">
+              <Skeleton className="h-[540px]" />
+              <Skeleton className="h-[540px]" />
             </div>
           </div>
         )}
@@ -393,37 +283,35 @@ export default function BrainActivationMap() {
 
         {!exportQuery.isLoading && !exportQuery.isError && (
           <>
-            <StatsBar summary={summary} />
-            <BrainMapsSection manifest={manifest} mode={mode} />
+            <ControlPanel
+              selectors={selectors}
+              onModelChange={(value) => updateSelection({ model: value, subject: null })}
+              onSubjectChange={(value) => updateSelection({ subject: value })}
+            />
 
-            <div className="mb-6 grid gap-6 xl:grid-cols-2">
-              <section className="rounded-[28px] border border-gray-800 bg-gray-900/70 p-5">
-                <div className="mb-3 text-sm font-medium text-gray-200">ROI predictions</div>
-                <div className="text-xs text-gray-500">From roi_scores.csv at protocol {summary?.protocol ?? "—"}, layer {summary?.layer ?? "—"}</div>
-                <div className="mt-4">
-                  <RoiComparisonChart rows={roiScores} />
-                </div>
-              </section>
-
-              <section className="rounded-[28px] border border-gray-800 bg-gray-900/70 p-5">
-                <div className="mb-3 text-sm font-medium text-gray-200">Selected ROI metric</div>
-                <div className="text-xs text-gray-500">Current metric: {metricLabel(metric)}</div>
-                <div className="mt-4">
-                  <MetricBarChart rows={roiScores} metric={metric} />
-                </div>
-              </section>
-            </div>
-
-            <section className="overflow-hidden rounded-[28px] border border-gray-800 bg-gray-900/70">
-              <div className="border-b border-gray-800 px-5 py-4">
-                <div className="text-sm font-medium text-gray-200">ROI score table</div>
-                <div className="mt-1 text-xs text-gray-500">All numeric fields are loaded from the local export without additional aggregation.</div>
-              </div>
-              <ScoreTable rows={roiScores} />
+            <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              <StatCard label="Mean correlation" value={fmt(summary?.mean_corr)} note={`Across ${summary?.n_rois ?? 0} ROIs`} />
+              <StatCard label="Peak correlation" value={fmt(summary?.max_corr)} note={peakCorrelationNote || null} />
+              <StatCard label="Best layer" value={summary?.layer ?? "—"} note={summary?.model_alias ? humanize(summary.model_alias) : null} />
+              <StatCard label="Painted ROIs" value={summary?.n_rois_painted ?? summary?.n_rois ?? "—"} note={summary?.subject ? `Subject ${summary.subject}` : null} />
             </section>
+
+            <section className="grid gap-4 xl:grid-cols-[minmax(0,1.45fr)_360px]">
+              <BrainSurfaceCard
+                imageUrl={manifest?.modes?.prediction?.surface}
+                caption={manifest?.note || `Mean correlation surface for ${summary?.model ?? "—"} on ${summary?.subject ?? "—"}.`}
+              />
+
+              <div className="space-y-4">
+                <RunConfigCard summary={summary} runConfig={runConfig} />
+                <TopRoiList rows={roiScores} />
+              </div>
+            </section>
+
+            <RoiDistribution rows={roiScores} />
           </>
         )}
-      </main>
+      </div>
     </div>
   );
 }

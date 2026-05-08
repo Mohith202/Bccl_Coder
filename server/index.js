@@ -14,7 +14,7 @@ import bootstrap from "./routes/bootstrap.js";
 import qc from "./routes/qc.js";
 import sweep from "./routes/sweep.js";
 import figures from "./routes/figures.js";
-import dashboardExport from "./routes/dashboardExport.js";
+import dashboardExport, { BRAIN_MAP_ROOT } from "./routes/dashboardExport.js";
 import hf from "./routes/hf.js";
 import { DATA_ROOT } from "./utils/paths.js";
 
@@ -31,6 +31,7 @@ if (!fs.existsSync(DATA_ROOT)) {
 
 // Static figures: read-only mount of DATA_ROOT under /static/figures
 app.use("/static/figures", express.static(DATA_ROOT, { fallthrough: true, index: false }));
+app.use("/static/brain-maps", express.static(BRAIN_MAP_ROOT, { fallthrough: true, index: false }));
 
 app.get("/api/health", (_req, res) => res.json({ ok: true, dataRoot: DATA_ROOT }));
 

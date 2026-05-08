@@ -33,7 +33,7 @@ export default function App() {
         <div className="px-5 pt-6 pb-4">
           <div className="text-[11px] mono uppercase tracking-[0.18em] text-ink-400">Neural Encoding Project</div>
           <div className="serif text-xl font-semibold text-ink-900 leading-tight mt-1">BCCL Coder</div>
-          <div className="mt-2 text-sm leading-6 text-ink-500">A trimmed research viewer for the project story, comparisons, and brain maps.</div>
+          <div className="mt-2 text-sm leading-6 text-ink-500">A trimmed research viewer for the project overview and brain maps.</div>
         </div>
         <nav className="px-2 pb-8">
           {SIDEBAR.map((g) => (
@@ -78,10 +78,6 @@ export default function App() {
           <Suspense fallback={<div className="space-y-4"><Skeleton /><Skeleton /></div>}>
             <Routes>
               <Route path="/" element={<PAGES.Dashboard exp={exp} expLabel={expLabel} metric={metric} />} />
-              <Route path="/comparison" element={<PAGES.ExperimentComparison exp={exp} expLabel={expLabel} metric={metric} experiments={experiments} />} />
-              <Route path="/noise-ceiling" element={<PAGES.NoiseCeiling exp={exp} expLabel={expLabel} metric={metric} />} />
-              <Route path="/figures" element={<PAGES.FigureGalleryPage exp={exp} expLabel={expLabel} />} />
-              <Route path="/presentation" element={<PAGES.PresentationPage />} />
               <Route path="/brain-map" element={<PAGES.BrainActivationMap />} />
             </Routes>
           </Suspense>

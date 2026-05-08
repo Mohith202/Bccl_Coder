@@ -250,14 +250,8 @@ export default function BrainActivationMap() {
           <div className="rounded-[28px] border border-ink-200/70 bg-[#f8f4eb] p-5">
             <div className="text-[11px] uppercase tracking-[0.18em] text-ink-400">Quick links</div>
             <div className="mt-4 space-y-3 text-sm">
-              <Link to="/presentation" className="block rounded-2xl border border-ink-200 bg-white px-4 py-3 font-medium text-ink-800 transition hover:border-indigo-300 hover:text-indigo-700">
-                Open presentation deck
-              </Link>
-              <Link to="/comparison" className="block rounded-2xl border border-ink-200 bg-white px-4 py-3 font-medium text-ink-800 transition hover:border-indigo-300 hover:text-indigo-700">
-                Compare model runs
-              </Link>
-              <Link to="/figures" className="block rounded-2xl border border-ink-200 bg-white px-4 py-3 font-medium text-ink-800 transition hover:border-indigo-300 hover:text-indigo-700">
-                Browse figure gallery
+              <Link to="/" className="block rounded-2xl border border-ink-200 bg-white px-4 py-3 font-medium text-ink-800 transition hover:border-indigo-300 hover:text-indigo-700">
+                Return to overview
               </Link>
             </div>
           </div>

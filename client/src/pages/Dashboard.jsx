@@ -71,7 +71,7 @@ export default function Dashboard({ exp, expLabel, metric }) {
       <PageHeader
         title="Overview"
         experiment={expLabel}
-        description="A cleaner entry point into the experiment: headline metrics, strongest ROI trends, and direct links into the interactive explorer and presentation deck."
+        description="A cleaner entry point into the experiment: headline metrics, strongest ROI trends, and a direct path into the interactive explorer."
       />
 
       <section className="mb-6 grid gap-4 xl:grid-cols-[minmax(0,1.4fr)_360px]">
@@ -81,14 +81,11 @@ export default function Dashboard({ exp, expLabel, metric }) {
             A narrative overview instead of a raw result dump.
           </h2>
           <p className="mt-4 max-w-3xl text-base leading-7 text-ink-600">
-            Start here for the strongest experiment-level signals, then jump into the per-subject brain explorer or the final presentation when you need a more focused story.
+            Start here for the strongest experiment-level signals, then jump into the per-subject brain explorer when you need a more focused story.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link to="/brain-map" className="rounded-2xl border border-indigo-200 bg-indigo-50 px-4 py-2.5 text-sm font-medium text-indigo-700 transition hover:border-indigo-300 hover:bg-indigo-100">
               Open interactive explorer
-            </Link>
-            <Link to="/presentation" className="rounded-2xl border border-ink-200 bg-white px-4 py-2.5 text-sm font-medium text-ink-800 transition hover:border-indigo-300 hover:text-indigo-700">
-              Open presentation deck
             </Link>
           </div>
         </Card>
@@ -161,16 +158,10 @@ export default function Dashboard({ exp, expLabel, metric }) {
 
         <Card className="p-6">
           <div className="text-[11px] uppercase tracking-[0.18em] text-ink-400">Next steps</div>
-          <div className="mt-2 text-xl font-semibold text-ink-900">Best pages for deeper inspection</div>
+          <div className="mt-2 text-xl font-semibold text-ink-900">Continue into the interactive explorer</div>
           <div className="mt-5 space-y-3 text-sm">
             <Link to="/brain-map" className="block rounded-2xl border border-ink-200 bg-white px-4 py-3 font-medium text-ink-800 transition hover:border-indigo-300 hover:text-indigo-700">
               Interactive explorer for per-subject maps
-            </Link>
-            <Link to="/comparison" className="block rounded-2xl border border-ink-200 bg-white px-4 py-3 font-medium text-ink-800 transition hover:border-indigo-300 hover:text-indigo-700">
-              Compare best-layer performance across experiments
-            </Link>
-            <Link to="/presentation" className="block rounded-2xl border border-ink-200 bg-white px-4 py-3 font-medium text-ink-800 transition hover:border-indigo-300 hover:text-indigo-700">
-              Open the final presentation deck
             </Link>
           </div>
         </Card>

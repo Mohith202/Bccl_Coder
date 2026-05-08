@@ -23,16 +23,8 @@ export const api = {
   layerSummary: (exp) => getJSON(staticDataUrl(`${exp}/layer-summary.json`)),
   bestLayer: (exp) => getJSON(staticDataUrl(`${exp}/best-layer.json`)),
   bestLayerVsNc: (exp) => getJSON(staticDataUrl(`${exp}/best-layer-vs-nc.json`)),
-  figures: (exp) => getJSON(staticDataUrl(`${exp}/figures.json`)),
   // Brain map: fetches pre-generated per-subject export JSON
   dashboardExport: (model, subject) =>
     getJSON(staticDataUrl(`brain-map/${encodeURIComponent(model)}/${encodeURIComponent(subject)}.json`)),
   brainMapSelectors: () => getJSON(staticDataUrl("brain-map/selectors.json")),
 };
-
-// Asset URL helpers (kept for compatibility with BrainActivationMap + PresentationPage)
-export function resolveApiUrl(path) { return path; }
-export function resolveAppAssetUrl(path) {
-  if (!path) return path;
-  return path.startsWith("/") ? path.slice(1) : path;
-}

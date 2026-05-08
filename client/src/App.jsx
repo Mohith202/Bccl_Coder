@@ -1,28 +1,13 @@
 import { Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import SidebarGroup from "./components/SidebarGroup.jsx";
 import { Skeleton } from "./components/Status.jsx";
-import { useSelection } from "./hooks.js";
-import { api } from "./api.js";
 import { PAGES, SIDEBAR } from "./routes.jsx";
-import { AVAILABLE_METRICS_FALLBACK } from "./constants.js";
 
 // Routes that take full viewport and manage their own layout
 const FULLSCREEN_ROUTES = new Set(["/brain-map"]);
 
 export default function App() {
-  const { exp, metric, set, params } = useSelection();
-  const search = `?${params.toString()}`;
-
-  const { data: expData } = useQuery({
-    queryKey: ["experiments"],
-    queryFn: api.experiments,
-  });
-  const experiments = expData?.data || [];
-  const metrics = expData?.meta?.metrics || AVAILABLE_METRICS_FALLBACK;
-  const expLabel = experiments.find(e => e.key === exp)?.label || exp;
-
   const loc = useLocation();
   const currentItem = SIDEBAR.flatMap(g => g.items).find(i => i.to === loc.pathname);
 
@@ -37,7 +22,7 @@ export default function App() {
         </div>
         <nav className="px-2 pb-8">
           {SIDEBAR.map((g) => (
-            <SidebarGroup key={g.title} title={g.title} items={g.items} search={search} />
+            <SidebarGroup key={g.title} title={g.title} items={g.items} search="" />
           ))}
         </nav>
       </aside>
@@ -51,33 +36,14 @@ export default function App() {
               {currentItem && <span className="mx-1.5">›</span>}
               {currentItem && <span className="text-ink-800">{currentItem.label}</span>}
             </div>
-            <div className="flex items-center gap-2">
-              <label className="text-xs text-ink-400">Experiment</label>
-              <select
-                value={exp}
-                onChange={(e) => set({ exp: e.target.value })}
-                className="text-sm rounded-md border border-ink-200 bg-white px-2 py-1.5 min-w-[14rem]"
-              >
-                {experiments.map(e => (
-                  <option key={e.key} value={e.key}>{e.label}</option>
-                ))}
-              </select>
-              <label className="text-xs text-ink-400 ml-2">Metric</label>
-              <select
-                value={metric}
-                onChange={(e) => set({ metric: e.target.value })}
-                className="text-sm rounded-md border border-ink-200 bg-white px-2 py-1.5"
-              >
-                {metrics.map(m => <option key={m} value={m}>{m}</option>)}
-              </select>
-            </div>
+            <div className="text-xs text-ink-500">Static overview and brain-map explorer</div>
           </div>
         </header>
 
         <main className={FULLSCREEN_ROUTES.has(loc.pathname) ? "flex-1 min-h-0 flex flex-col overflow-hidden" : "px-8 py-8 max-w-[1400px] w-full mx-auto"}>
           <Suspense fallback={<div className="space-y-4"><Skeleton /><Skeleton /></div>}>
             <Routes>
-              <Route path="/" element={<PAGES.Dashboard exp={exp} expLabel={expLabel} metric={metric} />} />
+              <Route path="/" element={<PAGES.Dashboard />} />
               <Route path="/brain-map" element={<PAGES.BrainActivationMap />} />
             </Routes>
           </Suspense>

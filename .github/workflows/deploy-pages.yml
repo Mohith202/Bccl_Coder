@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: TEAM-9/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
